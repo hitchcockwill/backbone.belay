@@ -8,6 +8,9 @@ module.exports = function(grunt) {
       compile: {
         files: {
           'backbone.belay.js': 'backbone.belay.coffee'
+        },
+        options: {
+          bare: true
         }
       }
     },
