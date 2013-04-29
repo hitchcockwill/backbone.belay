@@ -61,19 +61,21 @@ Backbone.Belay = (function(Backbone, _, jQuery) {
       console.log("clear watcher from: ", fragment);
       if (fragment) {
         console.log("array before clear: ", requests[fragment]);
-        requests[fragment] = _.reject(requests[fragment], function(r) {
-          if (r.readyState === 4) {
-            r.abort();
+        _.each(requests[fragment], function(r) {
+          console.log("clear request: ", r);
+          if (r.readyState !== 4) {
+            return r.abort();
           }
-          console.log("readyState: ", r.readyState, r.readyState === 4);
-          return r.readyState === 4;
         });
+        delete requests[fragment];
         return console.log("array after clear: ", requests[fragment]);
       } else {
         for (k in requests) {
           v = requests[k];
           _.each(v, function(r) {
-            return r.abort();
+            if (r.readyState !== 4) {
+              return r.abort();
+            }
           });
         }
         return requests = {};

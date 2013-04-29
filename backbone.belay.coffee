@@ -44,15 +44,15 @@ Backbone.Belay = do (Backbone, _, jQuery) ->
       console.log "clear watcher from: ", fragment
       if fragment
         console.log "array before clear: ", requests[fragment]
-        requests[fragment] = _.reject requests[fragment], (r) ->
-          if r.readyState is 4 then r.abort()
-          console.log "readyState: ", r.readyState, r.readyState is 4
-          return r.readyState is 4
+        _.each requests[fragment], (r) ->
+          console.log "clear request: ", r
+          if r.readyState isnt 4 then r.abort()
+        delete requests[fragment]
         console.log "array after clear: ", requests[fragment]
       else
         for k,v of requests
           _.each v, (r) ->
-            r.abort()
+            if r.readyState isnt 4 then r.abort()
         requests = {}
 
     initialize()
