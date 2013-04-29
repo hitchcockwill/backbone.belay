@@ -18,7 +18,16 @@ module.exports = function(grunt) {
     watch: {
       files: '*.coffee',
       tasks: ['coffee']
-    }  
+    },
+
+    jasmine: {
+      'belay': {
+        src : 'belay.js',
+        options: {
+          specs : 'spec/*.spec.js'
+        }
+      }
+    }
   }); 
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-watch');
