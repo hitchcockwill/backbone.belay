@@ -19,6 +19,9 @@ Backbone.Belay = (function(Backbone, _, jQuery) {
       }
       return serializer.clearWatcher(fragment);
     };
+    this.requests = function() {
+      return serializer.getRequests();
+    };
     return this;
   };
   Serializer = function(config) {
@@ -29,14 +32,14 @@ Backbone.Belay = (function(Backbone, _, jQuery) {
     initialize = function() {
       var self;
 
-      console.log("init serializer", _this);
       requests = {};
-      return self = _this;
+      self = _this;
+      return Backbone.history.on("route", function(router, fragment) {
+        return self.clearWatcher(Backbone.history.fragment);
+      });
     };
     setXHRListener = function(xhr, fragment) {
-      console.log("set listener");
       return $.when(xhr).then(function() {
-        console.log("request done");
         return _this.clearWatcher(fragment);
       });
     };
@@ -46,40 +49,37 @@ Backbone.Belay = (function(Backbone, _, jQuery) {
       if (!xhr) {
         return;
       }
-      console.log("set watcher: ", xhr);
       fragment = Backbone.history.fragment;
       if (!requests[fragment]) {
         requests[fragment] = [];
       }
       requests[fragment].push(xhr);
-      console.log("watcher set: ", requests);
-      return setXHRListener(xhr, fragment);
+      setXHRListener(xhr, fragment);
+      return requests;
     };
     this.clearWatcher = function(fragment) {
-      var k, v;
+      var fragRequests, k, v;
 
-      console.log("clear watcher from: ", fragment);
       if (fragment) {
-        console.log("array before clear: ", requests[fragment]);
-        _.each(requests[fragment], function(r) {
-          console.log("clear request: ", r);
+        fragRequests = requests[fragment];
+        delete requests[fragment];
+      }
+      for (k in requests) {
+        v = requests[k];
+        _.each(v, function(r) {
           if (r.readyState !== 4) {
             return r.abort();
           }
         });
-        delete requests[fragment];
-        return console.log("array after clear: ", requests[fragment]);
-      } else {
-        for (k in requests) {
-          v = requests[k];
-          _.each(v, function(r) {
-            if (r.readyState !== 4) {
-              return r.abort();
-            }
-          });
-        }
-        return requests = {};
       }
+      requests = {};
+      if (fragment) {
+        requests[fragment] = fragRequests;
+      }
+      return requests;
+    };
+    this.getRequests = function() {
+      return requests;
     };
     initialize();
     return this;
