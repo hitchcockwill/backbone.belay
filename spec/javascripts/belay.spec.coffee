@@ -2,17 +2,18 @@ describe "Belay", ->
   comments = answers = posts = null
 
   beforeEach ->
-    comments = new Comments()
-    answers = new Answers()
-    Posts = new Posts()
+    comments = new Backbone.Model()
 
-  it "should add three requests to the queue", ->
-    math = 1+1
+  it "comments.subject should be Hello World", ->
+    comments.set
+      subject: "Hello World"
+    expect(comments.get("subject")).toBe("Hello World")
 
-
-
-    expect(math).toEqual(2)
+  it "request should not be empty or undefined", ->
+    request = SampleApp.newRequest()
+    expect(_.isEmpty(request)).toBe(false)
+    expect(request.readyState).not.toBe(4)
 
   it "name should be Will", ->
-    name = "Will"
-    expect(name).toEqual("Will")
+    name = "Willy"
+    expect(name).toBe("Willy")

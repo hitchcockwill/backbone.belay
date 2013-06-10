@@ -3,22 +3,25 @@ describe("Belay", function() {
 
   comments = answers = posts = null;
   beforeEach(function() {
-    var Posts;
-
-    comments = new Comments();
-    answers = new Answers();
-    return Posts = new Posts();
+    return comments = new Backbone.Model();
   });
-  it("should add three requests to the queue", function() {
-    var math;
+  it("comments.subject should be Hello World", function() {
+    comments.set({
+      subject: "Hello World"
+    });
+    return expect(comments.get("subject")).toBe("Hello World");
+  });
+  it("request should not be empty or undefined", function() {
+    var request;
 
-    math = 1 + 1;
-    return expect(math).toEqual(2);
+    request = SampleApp.newRequest();
+    expect(_.isEmpty(request)).toBe(false);
+    return expect(request.readyState).not.toBe(4);
   });
   return it("name should be Will", function() {
     var name;
 
-    name = "Will";
-    return expect(name).toEqual("Will");
+    name = "Willy";
+    return expect(name).toBe("Willy");
   });
 });

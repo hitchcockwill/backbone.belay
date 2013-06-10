@@ -8,6 +8,7 @@ module.exports = function(grunt) {
       compile: {
         files: {
           'backbone.belay.js': 'backbone.belay.coffee',
+          'spec/javascripts/sample-backbone-app.js': 'spec/javascripts/sample-backbone-app.coffee',
           'spec/javascripts/belay.spec.js': 'spec/javascripts/belay.spec.coffee'
         },
         options: {
@@ -22,16 +23,21 @@ module.exports = function(grunt) {
         tasks: ['coffee']        
       },
       test: {
-        files: ['spec/belay.spec.js'],
+        files: ['spec/javascripts/belay.spec.js'],
         tasks: ['jasmine']
       }
     },
 
     jasmine: {
-      'belay': {
-        src : ['backbone.belay.js', 'public/**/*.js'],
+      belay: {
+        src : [
+          'public/javascripts/underscore.js', 
+          'public/javascripts/*.js', 
+          'spec/javascripts/sample-backbone-app.js',
+          'backbone.belay.js'
+        ],
         options: {
-          specs : 'spec/*.spec.js'
+          specs : 'spec/javascripts/*.spec.js'
         }
       }
     }
