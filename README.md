@@ -23,4 +23,8 @@ To use Backbone Belay, simply pass your fetch request into the ```Backbone.Belay
     });
 
 ###Cancelling a request###
-    Backbone.Belay.release("route/")
+    Backbone.Belay.release("route/");
+
+###Define a custom path to store the request###
+    xhr = model.fetch();
+    Backbone.Belay.spot(xhr, {path: "custom/path/"});
