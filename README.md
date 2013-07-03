@@ -11,7 +11,7 @@ To use Backbone Belay, simply pass your fetch request into the ```Backbone.Belay
 ##Examples##
 ###Basic Usage###
     xhr = model.fetch();
-    Backbone.Belay.spot(xhr).
+    Backbone.Belay.spot(xhr);
 
 ###Request with error callback###
     xhr = model.fetch({
