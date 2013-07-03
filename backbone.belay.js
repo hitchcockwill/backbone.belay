@@ -46,10 +46,13 @@ Backbone.Belay = (function(Backbone, _, jQuery) {
     this.setWatcher = function(xhr, options) {
       var fragment;
 
+      if (options == null) {
+        options = {};
+      }
       if (!xhr) {
         return;
       }
-      fragment = Backbone.history.fragment;
+      fragment = options.path || Backbone.history.fragment;
       if (!requests[fragment]) {
         requests[fragment] = [];
       }

@@ -1,3 +1,11 @@
+## Backbone.Belay v0.1.0
+##
+## Copyright (C)2013 Will Hitchcock
+## Distributed Under MIT License
+##
+## Documentation and Full License Available at:
+## http://github.com/hitchcockwill/backbone.belay
+
 Backbone.Belay = do (Backbone, _, jQuery) ->
   $ = jQuery
   Belay = (config) ->
@@ -34,11 +42,11 @@ Backbone.Belay = do (Backbone, _, jQuery) ->
 
     # add a new xhr request to the request object
     # set listener to remove request when it returns
-    this.setWatcher = (xhr, options) ->
+    this.setWatcher = (xhr, options = {}) ->
       if !xhr then return
-      fragment = Backbone.history.fragment
+      fragment = options.path || Backbone.history.fragment
       if !requests[fragment] then requests[fragment] = []
-      
+
       requests[fragment].push(xhr)
       setXHRListener(xhr, fragment)
 

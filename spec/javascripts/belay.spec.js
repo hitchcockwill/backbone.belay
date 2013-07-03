@@ -5,12 +5,6 @@ describe("Belay", function() {
   beforeEach(function() {
     return comments = new Backbone.Model();
   });
-  it("comments.subject should be Hello World", function() {
-    comments.set({
-      subject: "Hello World"
-    });
-    return expect(comments.get("subject")).toBe("Hello World");
-  });
   it("request should not be empty or undefined", function() {
     var request;
 
@@ -22,15 +16,13 @@ describe("Belay", function() {
     var request, requests;
 
     request = SampleApp.newRequest();
-    requests = Backbone.Belay.spot(request);
-    console.info("reqeusts: ", _.keys(requests, _.values(requests)));
+    requests = Backbone.Belay.spot(request, {
+      path: "test"
+    });
     expect(_.isEmpty(requests)).toBe(false);
     return expect(_.values(requests).length).toBe(1);
   });
-  return it("name should be Will", function() {
-    var name;
-
-    name = "Willy";
-    return expect(name).toBe("Willy");
+  return it("there should be no requests", function() {
+    return expect(_.isEmpty(requests)).toBe(false);
   });
 });
