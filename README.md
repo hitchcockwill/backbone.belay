@@ -1,5 +1,4 @@
 # Backbone Belay
-==============
 
 A plugin for managing multiple pending server requests with Backbone.
 
